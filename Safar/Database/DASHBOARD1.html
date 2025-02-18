@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard - Safar</title>
+  <style>
+    /* Add your existing CSS styles here */
+    .head {
+      background: linear-gradient(45deg, #d4953e, rgb(155, 107, 4), #da4804);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+    .logo-title-container {
+      display: flex;
+      align-items: center;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: #cdc3b2;
+    }
+    .dashboard-container {
+      display: flex;
+      width: 100%;
+    }
+    .sidebar {
+      width: 300px;
+      background-color: #f07f23;
+      color: white;
+      padding: 30px;
+      font-weight: bold;
+    }
+    .sidebar h2 {
+      text-align: center;
+      font-size: 24px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      padding: 15px 0;
+    }
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 15px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .sidebar ul li a:hover {
+      background-color: #d16518;
+    }
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: none;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: block;
+      margin: 20px auto;
+      cursor: pointer;
+    }
+    .hidden-input {
+      display: none;
+    }
+    .remove-btn {
+      display: block;
+      margin: 10px auto;
+      background-color: rgb(255, 0, 0);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    #chatbot-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .btn{
+      padding: 10px;
+      border-radius: 10px;
+      width: 100px;
+      background-color: rgb(134, 143, 150);
+      border: none;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .btn:hover {
+      background-color: #d4953e;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    #chatbot-box {
+      width: 100%;
+      max-width: 500px;
+      height: 300px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      overflow-y: auto;
+      background: white;
+      border-radius: 10px;
+    }
+    #chatbot-input {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .active {
+      display: block;
+    }
+  </style>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { getDatabase, ref, get, set, remove } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA890SKxHYlOOCx5CZVrGjJwy_RvePD3Tc",
+  authDomain: "safar-sign-up-and-login.firebaseapp.com",
+  projectId: "safar-sign-up-and-login",
+  storageBucket: "safar-sign-up-and-login.appspot.com",
+  messagingSenderId: "340257717905",
+  appId: "1:340257717905:web:aaa7ea659e1bb1a4f40930",
+  measurementId: "G-EYY432MQJY"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const username = sessionStorage.getItem("loggedInUser");
+
+  if (!username) {
+    alert("No user logged in. Redirecting to login page...");
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+    const userRef = ref(database, "users/" + username.replace(".", "_"));
+    const snapshot = await get(userRef);
+
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      displayUserData(userData);
+    } else {
+      alert("User data not found.");
+    }
+  } catch (error) {
+    alert("Error fetching user data: " + error.message);
+  }
+});
+
+function displayUserData(userData) {
+  // Display username
+  document.getElementById("username").innerText = userData.username;
+
+  // Display date of birth (if available)
+  if (userData.dob) {
+    document.getElementById("dob").innerText = userData.dob;
+  }
+
+  // Display gender (if available)
+  if (userData.gender) {
+    document.getElementById("gender").innerText = userData.gender;
+  }
+
+  // Display profile picture (if available)
+  if (userData.profilePicture) {
+    document.getElementById("profile-pic").src = userData.profilePicture;
+  }
+}
+
+async function updateProfilePic(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const username = sessionStorage.getItem("loggedInUser");
+    const userRef = ref(database, "users/" + username.replace(".", "_"));
+
+    // Convert the file to a data URL
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const profilePictureUrl = e.target.result;
+
+      try {
+        // Save the profile picture URL to Firebase
+        await set(ref(database, `users/${username.replace(".", "_")}/profilePicture`), profilePictureUrl);
+
+        // Update the profile picture on the dashboard
+        document.getElementById("profile-pic").src = profilePictureUrl;
+        alert("Profile picture updated successfully!");
+      } catch (error) {
+        alert("Error updating profile picture: " + error.message);
+      }
+    };
+    reader.readAsDataURL(file);
+  } else {
+    alert("No file selected.");
+  }
+}
+
+async function removeProfilePic() {
+  const username = sessionStorage.getItem("loggedInUser");
+  const userRef = ref(database, "users/" + username.replace(".", "_"));
+
+  try {
+    // Remove the profile picture URL from Firebase
+    await remove(ref(database, `users/${username.replace(".", "_")}/profilePicture`));
+
+    // Reset the profile picture to a default image
+    document.getElementById("profile-pic").src = "profile.jpg"; // Default image
+    alert("Profile picture removed successfully!");
+  } catch (error) {
+    alert("Error removing profile picture: " + error.message);
+  }
+}
+
+function showSection(sectionId) {
+  // Hide all sections
+  document.querySelectorAll(".card").forEach((section) => {
+    section.style.display = "none";
+  });
+
+  // Show the selected section
+  document.getElementById(sectionId).style.display = "block";
+}
+
+// Add event listeners for sidebar links
+document.querySelectorAll(".sidebar ul li a").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const sectionId = link.getAttribute("onclick").replace("showSection('", "").replace("')", "");
+    showSection(sectionId);
+  });
+});
+  </script>
+</head>
+<body>
+  <div class="head">
+    <div class="logo-title-container">
+      <img src="logo.png" class="logo" alt="Logo" height="80px" width="100px" />
+      <h1 class="title">Safar</h1>
+    </div>
+  </div>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a onclick="showSection('profile')">Profile</a></li>
+        <li><a onclick="showSection('saved-trips')">Saved Trips</a></li>
+        <li><a onclick="showSection('recommendations')">Recommendations</a></li>
+        <li><a onclick="showSection('chatbot')">Chatbot</a></li>
+        <li><a href="#logout">Logout</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <section id="profile" class="card active">
+        <h3>Profile</h3>
+        <input type="file" id="file-input" class="hidden-input" accept="image/*" onchange="updateProfilePic(event)">
+        <img src="profile.jpg" alt="User Profile" id="profile-pic" class="profile-pic" onclick="document.getElementById('file-input').click()">
+        <button class="remove-btn" onclick="removeProfilePic()">Remove Image</button>
+        <p>Username: <span id="username"></span></p>
+        <p>Date of Birth: <span id="dob"></span></p>
+        <p>Gender: <span id="gender"></span></p> <!-- Gender field added -->
+        <a href="../maincopy.html"><button class="btn">Search Trip</button></a>
+      </section>  
+
+      <section id="saved-trips" class="card">
+        <h3>Saved Trips</h3>
+        <ul id="trip-list"></ul>
+      </section>
+
+      <section id="recommendations" class="card">
+        <h3>Recommended Destinations</h3>
+        <p>Explore these amazing places based on your interests!</p>
+        <ul id="recommendation-list">
+          <li>Ajanta Caves</li>
+          <li>Lonavala</li>
+          <li>Bhandardara</li>
+          <li>Singhgad</li>
+          <li>Ajanta Fort</li>
+        </ul>
+      </section>
+
+      <section id="chatbot" class="card">
+        <h3>Chatbot Assistance</h3>
+        <div id="chatbot-box"></div>
+        <input type="text" id="chatbot-input" placeholder="Ask about Safar..." onkeypress="if(event.key === 'Enter') sendMessage()">
+      </section>
+    </main>
+  </div>
+</body>
+</html>

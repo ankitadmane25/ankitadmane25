@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Webpage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        .logo {
+            margin-left: 10px;
+        }
+        .head {
+            background: linear-gradient(45deg, #d4953e, rgb(155, 107, 4), #da4804);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between; /* Space out elements */
+            padding: 10px 20px;
+        }
+        .logo-title-container {
+            display: flex;
+            align-items: center; /* Align logo and title vertically */
+        }
+        .title {
+            font-size: 2.5rem;
+            color: rgba(227, 225, 225, 0.842);
+            margin-left: 20px; /* Space between logo and title */
+        }
+        body {
+            color: #d4953e;
+            font-family: "Poppins", sans-serif;
+            background-color: #ddcccc;
+            margin: 0;
+            padding: 0;
+        }
+        .mumbai, .nag, .jejuri {
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start; /* Align content to the left */
+            padding: 20px;
+            color: #0f0a0a;
+            text-align: left; /* Align text to the left */
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        h4 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 10px;
+            background-color: #d4953ebb;
+            border: none;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #d4953e;
+        }
+        .btns {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+        }
+        .sign {
+            padding: 10px;
+            border-radius: 10px;
+            width: 100px;
+            background-color: aliceblue;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .sign:hover {
+            background-color: #d4953e;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            .btn {
+                font-size: 0.9rem;
+            }
+            h2, h4 {
+                font-size: 1.5rem;
+            }
+            .head {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .btns {
+                margin-top: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.5rem;
+            }
+            .btn {
+                align-self: left;
+                font-size: 0.8rem;
+                padding: 8px 15px;
+            }
+            h2 {
+                font-size: 1.25rem;
+            }
+            h4 {
+                font-size: 1rem;
+            }
+            .mumbai, .nag, .jejuri {
+                height: 50vh;
+            }
+            .btns {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        .mumbai .btn, .nag .btn, .jejuri .btn {
+    align-self: flex-start; /* Align button to the left */
+}
+
+    </style>
+</head>
+<body>
+    <div class="head">
+        <div class="logo-title-container">
+            <img src="logo.png" class="logo" alt="Logo" height="80px" width="100px" />
+            <h1 class="title">Safar</h1>
+        </div>
+        <div class="btns">
+            <a href="Database\SIGNUP PAGE .html"><button class="sign">Signup</button></a>
+            <a href="Database\LOGIN PAGE.html"><button class="sign">Login</button></a>
+        </div>
+    </div>
+
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="mumbai" style="background-image: url('Taj.jpg');">
+                    <h2>Gate Way Of India</h2>
+                    <h4>Mumbai</h4>
+                    <button class="btn" onclick="change()">Know More</button>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="nag" style="background-image: url('nag.jpeg');">
+                    <h2>DikshaBhumi</h2>
+                    <h4>Nagpur</h4>
+                    <button class="btn" onclick="change()">Know More</button>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="jejuri" style="background-image: url('jejuri1.jpg');">
+                    <h2>Jejurgad</h2>
+                    <h4>Pune</h4>
+                    <button class="btn">Know More</button>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="jejuri" style="background-image: url('Ellora.jpg');">
+                    <h2>Ellora Caves</h2>
+                    <h4>Chh.Sambhaji Nagar</h4>
+                    <button class="btn">Know More</button>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+
+    <script type="module">
+        import Swiper from "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs";
+        const swiper = new Swiper(".swiper", {
+            direction: "horizontal",
+            loop: true,
+            pagination: { el: ".swiper-pagination" },
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        });
+        function change() {
+            location.replace('signup page.html');
+        }
+    </script>
+</body>
+</html>

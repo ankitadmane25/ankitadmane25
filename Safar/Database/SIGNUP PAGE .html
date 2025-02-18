@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safar - Signup</title>
+  <style>
+    /* General Styles */
+    body {
+      background-size: cover;
+      background-position: center;
+      font-family: "Poppins", sans-serif;
+      background-color: #cdc3b2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .logo {
+      margin-left: 10px;
+    }
+
+    .head {
+      background: linear-gradient(45deg, #d4953e, rgb(155, 107, 4), #da4804);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .title {
+      font-family: "Montserrat", sans-serif;
+      color: rgba(247, 237, 227, 0.842);
+      margin-left: 15px;
+      font-size: 1.5rem;
+    }
+
+    .signup-container {
+      max-width: 900px;
+      width: 90%;
+      display: flex;
+      box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+      background-color:  white;
+      flex-direction: column;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .signup-container:hover {
+      box-shadow: 4px 10px 8cqh hsla(32, 29%, 46%, 0.772);
+
+    }
+
+    h2 {
+      font-size: 2rem;
+      text-align: center;
+      color: #ef540c;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #e57708;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      background-color: white;
+      border: none;
+      border-bottom: 2px solid rgba(245, 84, 10, 0.966);
+      border-radius: 5px;
+      margin-bottom: 20px;
+      transition: border-color 0.5s;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #4caf50;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      max-width: 200px;
+      padding: 12px;
+      background-color: #b78510;
+      color: white;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 auto;
+    }
+
+    button:hover {
+      background-color: #de6d09;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 1rem;
+      color: green;
+    }
+
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .input-box {
+      flex-basis: 100%;
+    }
+
+    p {
+      color: red;
+      font-size: 0.9rem;
+      margin: 10px 0;
+    }
+
+    select {
+      color: rgb(0, 0, 0);
+      width: 15%;
+      height: 40px;
+      background: transparent;
+      font-size: 1rem;
+      border-bottom: 3px solid orangered;
+      padding: 2px 2px;
+      transition: border-color 0.5s;
+    }
+
+    input::placeholder {
+      color: rgb(53, 53, 53);
+    }
+
+    .btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (min-width: 600px) {
+      .input-box {
+        flex-basis: 48%;
+      }
+
+      .title {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 2.5rem;
+      }
+
+      label {
+        font-size: 1.2rem;
+      }
+
+      input,
+      select {
+        font-size: 1.1rem;
+      }
+
+      button {
+        font-size: 1.3rem;
+      }
+
+      .message {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .signup-container {
+        padding: 40px;
+      }
+
+      h2 {
+        font-size: 3rem;
+      }
+
+      label {
+        font-size: 1.3rem;
+      }
+
+      input,
+      select {
+        font-size: 1.2rem;
+      }
+
+      button {
+        font-size: 1.4rem;
+      }
+
+      .message {
+        font-size: 1.3rem;
+      }
+    }
+    
+  </style>
+
+</head>
+<body>
+  <div class="head">
+    <img src="logo.png" class="logo" height="100px" width="120px" />
+    <h1 class="title">Safar</h1>
+  </div>
+
+  <div class="signup-container">
+    <div class="heading">
+      <h2>Signup here!</h2>
+    </div>
+    <div class="form">
+      <form id="signupForm">
+        <div class="input-row">
+          <div class="input-box">
+            <label for="name">Full Name:</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
+          <div class="input-box">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" required />
+          </div>
+        </div>
+
+        <div class="selected">
+          <label for="gender">Gender:</label>
+          <select id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+            <option value="Rather not to say">Rather not to say</option>
+          </select>
+        </div>
+        <div class="input-row">
+          <div class="input-box">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              placeholder="Choose a username"
+              required
+            />
+          </div>
+          <div class="input-box">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Create a password"
+              required
+            />
+          </div>
+        </div>
+        <div class="selected">
+          <label for="cpass">Confirm Password:</label>
+          <input
+            type="password"
+            id="cpass"
+            placeholder="Confirm Password"
+            required
+          />
+          <br />
+        </div>
+        <p>
+          **your password must contain at least 8 characters, including a
+          number and a special symbol
+        </p>
+
+        <div class="btn">
+          <button type="submit">Signup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="message" id="signupMessage"></div>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA890SKxHYlOOCx5CZVrGjJwy_RvePD3Tc",
+      authDomain: "safar-sign-up-and-login.firebaseapp.com",
+      projectId: "safar-sign-up-and-login",
+      storageBucket: "safar-sign-up-and-login.firebasestorage.app",
+      messagingSenderId: "340257717905",
+      appId: "1:340257717905:web:aaa7ea659e1bb1a4f40930",
+      measurementId: "G-EYY432MQJY"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const dob = document.getElementById("dob").value;
+      const gender = document.getElementById("gender").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const cpass = document.getElementById("cpass").value;
+
+      if (password !== cpass) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      try {
+        const userRef = ref(database, "users/" + username.replace(".", "_"));
+        await set(userRef, { name, dob, gender, username, password });
+        alert("Signup successful!");
+        
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
